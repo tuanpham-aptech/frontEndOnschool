@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>Đăng nhập</title>
+</head>
+<body>
+    <div class="container fluid">
+        <div class="row">
+            <div class="m-auto col-12 col-xs-12  col-md-6">
+                <div class="login-form bg-light mt-4 p-4">
+                    <form onsubmit="return validate()" method="POST" class="row g-3">
+                        <h4>Đăng nhập</h4>
+                        <div class="col-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="fs-5">Email</label>
+                            <div class="d-flex">
+                                <input type="text" name="username" autocomplete="off" id="user" class="form-control" placeholder="Username">
+                                <div class="wrap-icon p-2">
+                                    <i class="fa-solid fa-envelope"></i>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-xs-12">
+                            <label class="fs-5">Mật khẩu</label>
+                            <div class="d-flex">
+                                <input type="password" name="password" autocomplete="off" id="pass" class="form-control" placeholder="Password">
+                                <div class="wrap-icon  p-2">
+                                    <i class="fa-solid fa-lock"></i>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-xs-12 ">
+                            <div class="form-check float-start">
+                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe"> Remember me</label>
+                            </div>
+                            <div class="form-check float-end">
+                                <a href="#">Forgot password</a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-danger button">Đăng nhập</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/8303a6dc74.js"></script>
+<script src="./assets/js/login.js"></script>
