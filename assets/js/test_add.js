@@ -1,111 +1,83 @@
 $(document).ready(function() {
-    $('#add_new').click(function(e) {
-        e.preventDefault();
-        let arrayItems = [
-            'masv',
-            'mahoso',
-            'fullname',
-            'gender',
-            'surname',
-            'birthdate',
-            'birthplace',
-            'email',
-            'phone'
-        ];
-        var i = checkValueInput(arrayItems);
-        var mahoso = $('#mahoso').val();
-        var masv = $('#masv').val();
-        var fullname = $('#fullname').val();
-        var gender = $('#gender').val();
-        var surname = $('#surname').val();
-        var birthdate = $('#birthdate').val();
-        var birthplace = $('#birthplace').val();
-        var email = $('#email').val();
-        var phone = $('#phone').val();
-        var religion = $('#religion').val();
-        var status = $('#status').val();
-        var ethnic = $('#ethnic').val();
-        var citizenID = $('#citizenID').val();
-        var dateRange = $('#date-range').val();
-        var placeIssue = $('#place-issue').val();
-        var address = $('#address').val();
-        var note = $('#note').val();
-        // console.log(i)
-        showMessageIndividualPhone(phone);
-        showMessageIndividualEmail(email);
-        if (i == 0 && isEmail(email) && isPhone(phone)) {
-            console.log({
-                mahoso,
-                masv,
-                fullname,
-                gender,
-                surname,
-                birthdate,
-                birthplace,
-                religion,
-                status,
-                ethnic,
-                citizenID,
-                dateRange,
-                placeIssue,
-                address,
-                note
-            });
-        }
-    })
-    $("#button-cancle").click(function(e) {
-        e.preventDefault();
-        console.log("cancle");
-    });
-
-    let showMessageIndividualEmail = (email) => {
-        if (!(isEmail(email))) {
-            $('#form_message-email').text('Vui lòng nhập đúng định dạng email');
-            $('#form_message-email').addClass('error');
-        } else {
-            $('#form_message-email').text('');
-            $('#form_message-email').removeClass('error');
-        }
-    }
-
-    let showMessageIndividualPhone = (phone) => {
-        if (!isPhone(phone)) {
-            $('#form_message-phone').text('Vui lòng nhập đúng định dạng điện thoại');
-            $('#form_message-phone').addClass('error');
-        } else {
-            $('#form_message-phone').text('');
-            $('#form_message-phone').removeClass('error');
-        }
-    }
-
-    var checkValueInput = (arrayItems) => {
-        var i = 0;
-        arrayItems.map((item) => {
-            if ($('#' + item).val() == '') {
-                $('#form_message-' + item).text('Vui lòng nhập trường này ');
-                $('#form_message-' + item).addClass('error')
-                i++;
-            } else {
-                $('#form_message-' + item).text('');
-                $('#form_message-' + item).removeClass('error')
+    // Check Email
+    $.validator.addMethod("checkEmail", function(value, element) {
+        return this.optional(element) || /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+    }, 'Vui lòng nhập đúng định dạng email.');
+    // Check Phone
+    $.validator.addMethod("checkPhone", function(value, element) {
+        return this.optional(element) || /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(value);
+    }, 'Vui lòng nhập đúng định dạng điện thoại.');
+    //Select Check
+    $.validator.addMethod('selectCheck', function(value) {
+        return (value != '');
+    }, "Vui lòng chọn giới tính ");
+    $("#form").validate({
+        submitHandler: function(form) {
+            console.log($('#form').serializeArray())
+        },
+        rules: {
+            "mahoso": {
+                required: true,
+                maxlength: 15
+            },
+            "masv": {
+                required: true,
+                minlength: 8
+            },
+            "fullname": {
+                required: true,
+            },
+            "surname": {
+                required: true,
+            },
+            "birthdate": {
+                required: true,
+            },
+            "birthplace": {
+                required: true,
+            },
+            "email": {
+                required: true,
+                checkEmail: true,
+            },
+            "phone": {
+                checkPhone: true,
+                required: true,
+            },
+            "gender": {
+                selectCheck: true,
             }
-        })
-        return i;
-    }
-
-    let isPhone = (phone) => {
-        var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        if (phoneno.test(phone)) {
-            return true;
+        },
+        messages: {
+            "mahoso": {
+                required: "Bắt buộc nhập mã hồ sơ",
+                minlength: "Hãy nhập tối thiểu 5 ký tự",
+            },
+            "masv": {
+                required: "Bắt buộc nhập mã sinh viên",
+                minlength: "Hãy nhập ít nhất 8 ký tự"
+            },
+            "fullname": {
+                required: "Bắt buộc nhập mã sinh viên",
+            },
+            "surname": {
+                required: "Bắt buộc nhập họ đệm",
+            },
+            "birthdate": {
+                required: "Bắt buộc nhập ngày sinh",
+            },
+            "birthplace": {
+                required: "Bắt buộc nhập nơi sinh",
+            },
+            "email": {
+                required: "Bắt buộc nhập email",
+            },
+            "phone": {
+                required: "Bắt buộc nhập số điện thoại",
+            },
+            "gender": {
+                required: "Vui lòng chọn giới tính "
+            }
         }
-        return false;
-    }
-
-    let isEmail = (value) => {
-        var EmailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (EmailRegex.test(value)) {
-            return true;
-        }
-        return false;
-    }
-})
+    });
+});

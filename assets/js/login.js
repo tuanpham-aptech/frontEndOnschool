@@ -1,53 +1,31 @@
 $(document).ready(function() {
-    $('#login_btn').click(function(e) {
-        e.preventDefault();
-        let arrayItems = [
-            'email',
-            'password',
-        ];
-        var i = checkValueInput(arrayItems);
-        var email = $('#email').val();
-        var password = $('#password').val();
-        // console.log(i)
-        showMessageIndividualEmail(email);
-        if (i == 0 && isEmail(email)) {
-            console.log({
-                email,
-                password,
-            });
-        }
-    })
+    // Check Email
+    $.validator.addMethod("checkEmail", function(value, element) {
+        return this.optional(element) || /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value);
+    }, 'Vui lòng nhập đúng định dạng email.');
 
-    let showMessageIndividualEmail = (email) => {
-        if (!(isEmail(email))) {
-            $('#form_message-email').text('Vui lòng nhập đúng định dạng email');
-            $('#form_message-email').addClass('error');
-        } else {
-            $('#form_message-email').text('');
-            $('#form_message-email').removeClass('error');
-        }
-    }
-
-    var checkValueInput = (arrayItems) => {
-        var i = 0;
-        arrayItems.map((item) => {
-            if ($('#' + item).val() == '') {
-                $('#form_message-' + item).text('Vui lòng nhập trường này ');
-                $('#form_message-' + item).addClass('error')
-                i++;
-            } else {
-                $('#form_message-' + item).text('');
-                $('#form_message-' + item).removeClass('error')
+    $("#login_form").validate({
+        submitHandler: function(form) {
+            console.log($('#login_form').serializeArray())
+        },
+        rules: {
+            "email": {
+                required: true,
+                checkEmail: true,
+            },
+            "password": {
+                required: true,
+                minlength: 8
             }
-        })
-        return i;
-    }
-
-    let isEmail = (value) => {
-        var EmailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (EmailRegex.test(value)) {
-            return true;
+        },
+        messages: {
+            "email": {
+                required: "Bắt buộc nhập email",
+            },
+            "password": {
+                required: "Bắt buộc nhập mật khẩu",
+                minlength: "Hãy nhập ít nhất 8 ký tự"
+            }
         }
-        return false;
-    }
-})
+    });
+});
